@@ -1,0 +1,10 @@
+Drag the index.html file to a browser
+
+Press SPACE to start
+
+Use the arrow keys to control your character's acceleration
+
+Dodge the clouds
+
+Press P to pause
+
