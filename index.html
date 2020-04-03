@@ -1,14 +1,93 @@
-<body>
-  <canvas id="my_canvas"> </canvas>
+<body style="visibility: hidden" onload="js_Load()">
+  <div id="cover">
+    <h1 id="loading">Loading...</h1>
+  </div>
+  <div class="screen">
+    <p id="pause_instruction">P II</p>
+    <div class="start-container">
+      <h1 id="start">Press Space to Start</h1>
+    </div>
+    <div class="pause-container">
+      <h1 id="pause">PAUSE</h1>
+    </div>
+    <canvas id="my_canvas"> </canvas>
+  </div>
 </body>
 
 <script src="main.js"></script>
 
 <style>
+  #cover {
+    z-index: 9999;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    background: white;
+    display: table;
+  }
+  .remove-cover {
+    display: none !important;
+  }
+  #loading {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-family: cursive;
+    font-size: 120px;
+  }
   #my_canvas {
     border: 1px solid #c3c3c3;
     display: block;
-    margin: auto;
     background: lightblue;
+    margin: auto;
+  }
+  .screen {
+    position: relative;
+  }
+  .screen,
+  .pause-container,
+  .start-container {
+    width: 1000px;
+    height: 600px;
+    margin: auto;
+  }
+  .pause-container,
+  .start-container {
+    position: absolute;
+    display: table;
+    justify-content: center;
+  }
+  .pause-container h1 {
+    font-size: 120px;
+    font-family: cursive;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    opacity: 0;
+  }
+  .start-container h1 {
+    font-size: 120px;
+    font-family: cursive;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    opacity: 1;
+    color: #eeed84;
+    transition: all 1s;
+  }
+  .paused {
+    background: #3333338a;
+    opacity: 1 !important;
+  }
+  #pause_instruction {
+    position: absolute;
+    font-weight: 900;
+    font-family: sans-serif;
+    right: 20px;
   }
 </style>

@@ -78,7 +78,11 @@ setCloudProps(cloud1)
 cloud1.speed = 5
 cloud2.speed = 8
 
+// Starting the Game
+const cover = document.querySelector('#cover')
+const start = document.querySelector('#start')
 const startGame = () => {
+  start.style.opacity = 0
   intro()
   setTimeout(() => animateCloud1(), 1500)
 }
@@ -138,19 +142,23 @@ function run(e) {
   if (e.keyCode == 32) startGame()
 }
 
+// Pause Functions
+const pauseMenu = document.querySelector('#pause')
 let paused = false
 function pause(e) {
   if (e.keyCode == 80) {
     if (!paused) {
+      pauseMenu.classList.toggle('paused')
       cancelAnimationFrame(rafID1)
       paused = true
     } else {
+      pauseMenu.classList.toggle('paused')
       requestAnimationFrame(animateCloud1)
       paused = false
     }
   }
 }
-let oldCloudX = 0
+
 function moveHero() {
   const { x, y, width, height, speed } = hero
   const currentSpeed = [speed.x, speed.y]
@@ -208,3 +216,7 @@ const right = () => {
 
 document.body.addEventListener('keyup', run)
 document.body.addEventListener('keydown', move)
+function js_Load() {
+  document.body.style.visibility = 'visible'
+}
+setTimeout(() => cover.classList.add('remove-cover'), 2000)
