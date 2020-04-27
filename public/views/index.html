@@ -1,3 +1,10 @@
+<head>
+  <script>
+    const js_Load = () => {
+      document.body.style.visibility = 'visible'
+    }
+  </script>
+</head>
 <body style="visibility: hidden" onload="js_Load()">
   <div id="cover">
     <h1 id="loading">Loading...</h1>
@@ -7,14 +14,28 @@
     <div class="start-container">
       <h1 id="start">Press Space to Start</h1>
     </div>
-    <div class="pause-container">
-      <h1 id="pause">PAUSE</h1>
+    <div class="container">
+      <h1 id="retry">You Lose. Press Space to Retry</h1>
+    </div>
+    <div class="container">
+      <div id="pause">
+        PAUSE
+        <p class="instructions">
+          You are a new hero learning how to fly. Dodge the clouds and stay
+          afloat as long as you can.
+        </p>
+        <p class="instructions">&lt;^&gt; Move with Arrow Keys</p>
+        <p class="instructions">
+          You accumulate more points the further right you are
+        </p>
+        </p>
+      </div>
     </div>
     <canvas id="my_canvas"> </canvas>
   </div>
 </body>
 
-<script src="main.js"></script>
+<script src="../main.js" type="module"></script>
 
 <style>
   #cover {
@@ -46,19 +67,20 @@
     position: relative;
   }
   .screen,
-  .pause-container,
+  .container,
   .start-container {
     width: 1000px;
     height: 600px;
     margin: auto;
   }
-  .pause-container,
+  .container,
   .start-container {
     position: absolute;
     display: table;
     justify-content: center;
   }
-  .pause-container h1 {
+  .container h1,
+  .container div {
     font-size: 120px;
     font-family: cursive;
     font-weight: bold;
@@ -80,9 +102,20 @@
     color: #eeed84;
     transition: all 1s;
   }
+  .instructions {
+    font-size: 16px;
+    max-width: 500px;
+    padding-bottom: 20px;
+    margin: auto;
+  }
   .paused {
     background: #3333338a;
     opacity: 1 !important;
+  }
+  .lost-game {
+    transition: all cubic-bezier(1, -0.05, 0.73, 0.6) 1.2s;
+    background: #eeed84;
+    opacity: 0.9 !important;
   }
   #pause_instruction {
     position: absolute;

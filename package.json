@@ -1,0 +1,22 @@
+{
+  "name": "video-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TerranceDwan/Javascipt-practice-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TerranceDwan/Javascipt-practice-game/issues"
+  },
+  "homepage": "https://github.com/TerranceDwan/Javascipt-practice-game#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
