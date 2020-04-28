@@ -36,6 +36,8 @@ let state = {
     height: null,
     speed: 8,
   },
+  points: 0,
+  pointsIntId: '',
 }
 
 const methods = {

@@ -3,20 +3,22 @@ import pause from './pauseGame.js'
 import startGame from './startGame.js'
 import cloudFunctions from './cloudFunctions.js'
 import moveHero from './moveHero.js'
+import addPoints from './pointsSystem.js'
 
 const { state, methods, constructors } = stateManager
-
-const tryAgain = () => {
-  const retry = document.querySelector('#retry')
-  retry.classList.toggle('lost-game')
-}
 
 const youLose = () => {
   document.body.removeEventListener('keyup', pause)
   document.body.removeEventListener('keydown', moveHero.move)
+  clearInterval(stateManager.state.pointsIntId)
   methods.cancelAnimations()
   tryAgain()
   document.body.addEventListener('keyup', restart)
+}
+
+const tryAgain = () => {
+  const retry = document.querySelector('#retry')
+  retry.classList.toggle('lost-game')
 }
 
 function restart(e) {
@@ -30,6 +32,8 @@ function restart(e) {
       200,
       150
     )
+    stateManager.state.points = 0
+    stateManager.state.pointsIntId = setInterval(addPoints, 200)
     startGame.startIntro()
     moveHero.heroInit()
     cloudFunctions.setCloudProps(stateManager.state.cloud1)

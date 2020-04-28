@@ -1,4 +1,5 @@
 import stateManager from './state.js'
+import pointsSystem from './pointsSystem.js'
 import pause from './pauseGame.js'
 
 let { context, hero, heroObj } = stateManager.state
