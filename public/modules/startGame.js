@@ -1,8 +1,7 @@
 import stateManager from './state.js'
-import pointsSystem from './pointsSystem.js'
 import pause from './pauseGame.js'
 
-let { context, hero, heroObj } = stateManager.state
+let { context, heroObj } = stateManager.state
 
 function run(e) {
   if (e.keyCode == 32) startIntro()

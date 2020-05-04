@@ -1,21 +1,37 @@
 import stateManager from './state.js'
+import TWEEN from './tween.esm.js'
 
-const score = document.querySelector('#points')
+const scoreIndicator = document.querySelector('#points')
+
+let tween
 
 const addPoints = () => {
-  const { points, hero } = stateManager.state
+  const { score, hero } = stateManager.state
+  tween = new TWEEN.Tween({ score: score })
   if (hero.x > 0) {
-    stateManager.state.points = Math.floor(points + hero.x / 100 + 1)
-    score.innerHTML = stateManager.state.points
+    stateManager.state.score = Math.floor(score + hero.x / 50 + 1)
+    tween.to({ score: Math.floor(score + hero.x / 50 + 1) }, 200)
+    tween.start()
+    tween.onUpdate(function(object) {
+      scoreIndicator.innerHTML = Math.floor(object.score)
+    })
   }
+}
+
+const changeScore = () => {
+  scoreIndicator.innerHTML = stateManager.state.score
+  TWEEN.update()
+  stateManager.state.scoreRafId = requestAnimationFrame(changeScore)
 }
 
 function run(e) {
   if (e.keyCode == 32) {
-    stateManager.state.pointsIntId = setInterval(addPoints, 50)
+    stateManager.state.scoreIntId = setInterval(addPoints, 200)
+    requestAnimationFrame(addPoints)
+    changeScore()
     document.body.removeEventListener('keyup', run)
   }
 }
 document.body.addEventListener('keyup', run)
 
-export default addPoints
+export default { addPoints, changeScore }

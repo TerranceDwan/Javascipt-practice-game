@@ -1,5 +1,7 @@
 import stateManager from './state.js'
 
+const movement = 2
+
 function moveHero() {
   const { hero, heroObj, context } = stateManager.state
   const { x, y, width, height, speed } = hero
@@ -17,10 +19,10 @@ function moveHero() {
   hero.y += speed.y
   hero.x += speed.x
   context.clearRect(
-    x - currentSpeed[0],
-    y - currentSpeed[1],
-    width + 1,
-    height + 1
+    x - (currentSpeed[0] + 1),
+    y - (currentSpeed[1] + 1),
+    width + movement + 1,
+    height + movement + 1
   )
   context.drawImage(heroObj, x, y, width, height)
   stateManager.state.heroRafID = requestAnimationFrame(moveHero)
@@ -32,23 +34,23 @@ function move(e) {
   if (e.keyCode == 39) right()
 }
 const up = () => {
-  if (stateManager.state.hero.speed.y >= -10) {
-    stateManager.state.hero.speed.y -= 1
+  if (stateManager.state.hero.speed.y >= -16) {
+    stateManager.state.hero.speed.y -= movement
   }
 }
 const down = () => {
-  if (stateManager.state.hero.speed.y <= 10) {
-    stateManager.state.hero.speed.y += 1
+  if (stateManager.state.hero.speed.y <= 16) {
+    stateManager.state.hero.speed.y += movement
   }
 }
 const left = () => {
-  if (stateManager.state.hero.speed.x >= -10) {
-    stateManager.state.hero.speed.x -= 1
+  if (stateManager.state.hero.speed.x >= -16) {
+    stateManager.state.hero.speed.x -= movement
   }
 }
 const right = () => {
-  if (stateManager.state.hero.speed.x <= 10) {
-    stateManager.state.hero.speed.x += 1
+  if (stateManager.state.hero.speed.x <= 16) {
+    stateManager.state.hero.speed.x += movement
   }
 }
 

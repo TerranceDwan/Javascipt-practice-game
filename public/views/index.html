@@ -12,13 +12,18 @@
   <div class="screen">
     <p id="pause_instruction">P II</p>
     <p id="points">0</p>
-    <div class="start-container">
+    <div class="container start">
       <h1 id="start">Press Space to Start</h1>
     </div>
-    <div class="container">
-      <h1 id="retry">You Lose. Press Space to Retry</h1>
+    <div class="container high-scores">
+      <div id="end_game">
+        <h2 id="end_game_title"></h2>
+        <input type="text" placeholder="AAA" spellcheck="false" maxlength="3">
+        <ul id="scores"></ul>
+        <h3 id="space_to_retry">Press Space to Retry</h3> 
+      </div>
     </div>
-    <div class="container">
+    <div class="container pause-screen">
       <div id="pause">
         PAUSE
         <p class="instructions">
@@ -39,6 +44,15 @@
 <script src="../main.js" type="module"></script>
 
 <style>
+  ul{
+    list-style: none;
+    padding:0px;
+    font-size: 16px;
+    width: 100px;
+    margin: auto;
+    text-align: left;
+    visibility:hidden;
+  }
   #cover {
     z-index: 9999;
     height: 100%;
@@ -68,20 +82,20 @@
     position: relative;
   }
   .screen,
-  .container,
-  .start-container {
-    width: 1000px;
-    height: 600px;
+  .container {
+    width: 1003px;
+    height: 603px;
     margin: auto;
   }
-  .container,
-  .start-container {
+  .container{
     position: absolute;
     display: table;
     justify-content: center;
   }
-  .container h1,
-  .container div {
+  .start h1 {
+    color: #eeed84;
+  }
+  .container h1 {
     font-size: 120px;
     font-family: cursive;
     font-weight: bold;
@@ -91,7 +105,19 @@
     vertical-align: middle;
     opacity: 0;
   }
-  .start-container h1 {
+  .container div{
+    font-family: cursive;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    opacity: 0;
+  }
+  #space_to_retry{
+    visibility: hidden;
+  }
+  .container h1 {
     font-size: 120px;
     font-family: cursive;
     font-weight: bold;
@@ -100,7 +126,6 @@
     display: table-cell;
     vertical-align: middle;
     opacity: 1;
-    color: #eeed84;
     transition: all 1s;
   }
   .instructions {
@@ -109,11 +134,20 @@
     padding-bottom: 20px;
     margin: auto;
   }
+  .pause-screen{
+    visibility: hidden;
+  }
   .paused {
     background: #3333338a;
     opacity: 1 !important;
+    visibility: visible !important;
   }
   .lost-game {
+    transition: all cubic-bezier(1, -0.05, 0.73, 0.6) 1.2s;
+    background: #eeed84;
+    opacity: 1 !important;
+  }
+  .set-high-score{
     transition: all cubic-bezier(1, -0.05, 0.73, 0.6) 1.2s;
     background: #eeed84;
     opacity: 0.9 !important;
@@ -129,5 +163,22 @@
     font-weight: 900;
     font-family: sans-serif;
     left: 20px;
+  }
+  #congratulations{
+    display: block;
+  }
+  input{
+    padding: 10px;
+    font-size: 30px;
+    font-family: cursive;
+    width: 100px;
+    background: #eeed84;
+    border: none;
+    display: none;
+    text-transform: uppercase;
+    z-index: 1000;
+  }
+  .congrats-item{
+    visibility: hidden;
   }
 </style>

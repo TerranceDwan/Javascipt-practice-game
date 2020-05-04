@@ -36,8 +36,20 @@ let state = {
     height: null,
     speed: 8,
   },
-  points: 0,
-  pointsIntId: '',
+  score: 0,
+  scoreRafId: '',
+  scoreIntId: '',
+  highScores: [
+    ['TDL', 1000],
+    ['CKM', 900],
+    ['JMB', 800],
+    ['AAA', 700],
+    ['AAB', 600],
+    ['AAA', 500],
+    ['AAA', 400],
+    ['AAA', 300],
+    ['AAA', 200],
+  ],
 }
 
 const methods = {
@@ -45,6 +57,7 @@ const methods = {
     cancelAnimationFrame(state.heroRafID)
     cancelAnimationFrame(state.rafID1)
     cancelAnimationFrame(state.rafID2)
+    cancelAnimationFrame(state.scoreRafId)
   },
   setup() {
     state.canvas = document.getElementById('my_canvas')
