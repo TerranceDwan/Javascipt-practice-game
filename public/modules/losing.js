@@ -4,8 +4,21 @@ import startGame from './startGame.js'
 import cloudFunctions from './cloudFunctions.js'
 import moveHero from './moveHero.js'
 import pointsSystem from './pointsSystem.js'
+import highScores from '../API_calls/highscores.js'
 
 const { state, methods, constructors } = stateManager
+
+const populateHighScores = () => {
+  highScores.getHighScores().then((scores) => {
+    const scoresArray = []
+    for (let i = 0; i < scores.length; i++) {
+      scoresArray.push([scores[i].initials, scores[i].score])
+    }
+    stateManager.state.highScores = scoresArray
+  })
+}
+
+populateHighScores()
 
 const youLose = () => {
   document.body.removeEventListener('keyup', pause)
@@ -17,30 +30,35 @@ const youLose = () => {
 
 const highScoreCheck = () => {
   const { score, highScores } = stateManager.state
-  const lowHighScore = highScores.reduce((x, y) => {
-    if (x < y) {
-      return x
-    }
-    return y
-  })[1]
-  const endGame = document.querySelector('#end_game')
-  endGame.classList.toggle('lost-game')
-  if (score > lowHighScore) {
+  if (highScores.length < 9) {
     collectInitials()
   } else {
-    tryAgain()
+    const lowHighScore = highScores.reduce((x, y) => {
+      if (x[1] < y[1]) {
+        return x
+      }
+      return y
+    })[1]
+    if (score > lowHighScore) {
+      collectInitials()
+    } else {
+      tryAgain()
+    }
   }
+  const endGame = document.querySelector('#end_game')
+  endGame.classList.toggle('lost-game')
 }
 
 const collectInitials = () => {
   const initialsInput = document.querySelector('input')
   const endGameTitle = document.querySelector('#end_game_title')
 
-  endGameTitle.innerHTML = 'Congratulations'
+  endGameTitle.innerHTML = 'New High Score!'
   endGameTitle.style.fontSize = '84px'
   initialsInput.value = ''
+  initialsInput.style.display = 'inline'
+
   initialsInput.focus()
-  initialsInput.style.display = 'initial'
 
   document.body.addEventListener('keyup', mutateHighScore)
 }
@@ -48,11 +66,18 @@ const collectInitials = () => {
 function mutateHighScore(e) {
   if (e.keyCode == 13) {
     const initialsInput = document.querySelector('input')
-    stateManager.state.highScores.push([
-      initialsInput.value ? initialsInput.value.toUpperCase() : 'AAA',
-      stateManager.state.score,
-    ])
+    const initials = initialsInput.value
+      ? initialsInput.value.toUpperCase()
+      : 'AAA'
 
+    highScores.addHighScore(initials, stateManager.state.score)
+
+    stateManager.state.highScores.push([initials, stateManager.state.score])
+
+    stateManager.state.highScores.sort((a, b) => b[1] - a[1])
+    if (stateManager.state.highScores.length > 9) {
+      stateManager.state.highScores.pop()
+    }
     initialsInput.style.display = 'none'
 
     document.body.removeEventListener('keyup', mutateHighScore)
@@ -74,7 +99,7 @@ const tryAgain = () => {
 const fillHighScores = () => {
   const scoresArray = stateManager.state.highScores.sort((a, b) => b[1] - a[1])
   const displayScores = document.querySelector('#scores')
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 9 && i < scoresArray.length; i++) {
     const score = document.createElement('li')
     score.setAttribute('class', 'score')
     score.innerHTML =

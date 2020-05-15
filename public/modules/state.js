@@ -39,17 +39,7 @@ let state = {
   score: 0,
   scoreRafId: '',
   scoreIntId: '',
-  highScores: [
-    ['TDL', 1000],
-    ['CKM', 900],
-    ['JMB', 800],
-    ['AAA', 700],
-    ['AAB', 600],
-    ['AAA', 500],
-    ['AAA', 400],
-    ['AAA', 300],
-    ['AAA', 200],
-  ],
+  highScores: [],
 }
 
 const methods = {

@@ -1,7 +1,7 @@
 import stateManager from './state.js'
 import youLose from './losing.js'
 
-let { canvas, context, cloud1, cloud2, imgObj, hero } = stateManager.state
+let { canvas, context, cloud1, imgObj } = stateManager.state
 
 const setCloudProps = (cloud) => {
   cloud.imgPath = '../images/cloud-clipart-transparent-9.png'
@@ -20,6 +20,7 @@ const globalCloudFunction = (cloud) => {
   context.drawImage(imgObj, x, y, width, height)
 }
 const rerunCloud = (cloud) => {
+  let { cloud1, cloud2 } = stateManager.state
   const { x, width, speed } = cloud
   if (x > -width - 20) {
     cloud.x -= speed
@@ -49,7 +50,7 @@ const setAndRunCloud = (cloud) => {
 const animateCloud1 = () => {
   let { cloud1, hero } = stateManager.state
   document.body.removeEventListener('keyup', run)
-  if (cloud1.x < 130 + hero.x && cloud1.x + cloud1.width > hero.x) {
+  if (cloud1.x < 130 + hero.x && cloud1.x + cloud1.width - 15 > hero.x) {
     if (cloud1.y < hero.y && cloud1.y + cloud1.height > hero.y + 20) {
       return youLose()
     } else if (
